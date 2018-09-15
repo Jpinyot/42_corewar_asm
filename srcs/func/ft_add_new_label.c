@@ -22,11 +22,11 @@ static t_label	**add_to_copy(t_label **label, int id, char *l)
 
 	tmp = label[id];
 	if (ft_cmpr_str(tmp->name,  l))
-		write(1, "####!!###\n\n", 10); //EROOR !!!!!
+		ft_error_label(0, 0, l);
 	while (tmp->copy)
 	{
 		if (ft_cmpr_str(tmp->copy->name,  l))
-			write(1, "####!!###\n\n", 10);
+			ft_error_label(0, 0, l);
 		tmp = tmp->copy;
 	}
 	tmp->copy = ft_newlabel(l, id);
