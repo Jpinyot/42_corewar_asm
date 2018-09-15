@@ -3,6 +3,7 @@
 # include "../libft/libft.h"
 # include "op.h"
 # include <fcntl.h>
+#define	HASH_SIZE 100
 
 #define KNRM  "\x1B[0m"
 #define KRED  "\x1B[31m"
@@ -48,6 +49,12 @@ typedef	struct	s_line
 	struct s_line	*next;
 }		t_line;
 
+typedef struct	ord
+{
+	t_line *bgn;
+	t_label **label;
+}		t_ord;
+
 //SRCS
 int     assembler(int fd, char *filename);
 
@@ -58,7 +65,7 @@ int     ft_strcmp_index_jmp(char *s1, char *s2);
 t_label	*ft_newlabel(char *name, int id);
 t_line	*ft_newline(t_label *l, int ord_n, char *line, int w);
 t_line          *ft_getorders(char *l, t_label **label, int j, int n_line);
-t_label         *ft_add_new_label(t_label **label, int  id, char *l, int i);
+t_label         **ft_add_new_label(t_label **label, int  id, char *l, int i);
 t_line  *ft_add_new_line(char *l, int cnt, int i, int n_line);
 int             ft_atoi_asm(const char *str, int pos, int *val);
 int     ft_jmp_s_t(char *s, int i);
@@ -98,5 +105,5 @@ void    ft_check_for_coments(char *l, int i,int n_line);
 void ft_error_getorders(int l, int sel);
 
 //PRINT
-void    ft_printlabel(t_label *l);
+void    ft_printlabel(t_label **l);
 #endif

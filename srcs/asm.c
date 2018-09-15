@@ -39,29 +39,27 @@ static t_line	*ft_getpos(t_line *line)
 	return (line->next);
 }
 /*
-static t_label	*newlabel(void)
+static t_label	**newlabel(t_label **ret)
 {
-	t_label ret[100];
-//	int i;
+	int i;
 
-//	i = -1;
-//	while (++i < 100)
-//		ret[i] = NULL;
+	i = -1;
+	while (++i < HASH_SIZE)
+		ret[i] = NULL;
 	return (ret);
 }
 */
-static t_line	*orders(int fd, int line_n)
+static t_line	*orders(int fd, int line_n, t_label **label)
 {
-	int		i;
 	int		j;
 	char		*l;
 	t_line		*line;
 	t_line		*bgn;
-	t_label ret[100];
+//	t_ord		ord;
 	
-	i = line_n;
-	line = ft_newline(ret, -1, NULL, 0);
+	line = ft_newline(NULL, -1, NULL, 0);
 	bgn = line;
+//	ord.bgn = line;
 	while (get_next_line(fd, &l) > 0)
 	{
 		j = 0;
@@ -69,12 +67,13 @@ static t_line	*orders(int fd, int line_n)
 			j++;
 		if (l[j] != 0 && l[j] != COMMENT_CHAR)
 		{
-			line->next = ft_getorders(l, &bgn->label, j, i);
-			line = ft_getpos(line);
+			line->next = ft_getorders(l, label, j, line_n);
+//			line = ft_getpos(line);
 //			print_line(line);	//print
 		}
-		i++;
+		line_n++;
 	}
+//	ft_printlabel(label);
 	return (bgn);
 }
 
@@ -82,9 +81,15 @@ int	assembler(int fd, char *filename)
 {
 	t_header	header;
 	t_line		*line;
+	t_label 	*label[HASH_SIZE];
+	int i;
 
+	i = -1;
+	while (++i < HASH_SIZE)
+		label[i] = NULL;
+//	label[HASH_SIZE - 1] = ft_newlabel(NULL, -1);
 	header = name_and_comment(fd);
-	line = orders(fd, header.line_n);
+	line = orders(fd, header.line_n, label);
 //	label = ft_newlabel(NULL, -1);
 //	if ((fd2 = open(filename, O_WRONLY | O_CREAT | O_TRUNC,
 //					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)

@@ -38,7 +38,7 @@ t_line		*ft_getorders(char *l, t_label **label, int i, int n_line)
 		cnt += l[j];
 	if (l[j] && l[j] == LABEL_CHAR)
 	{
-		label[0] = ft_add_new_label(label, cnt, l, i);
+		label = ft_add_new_label(label, cnt, l, i);
 //		line = get_line(l, label, j + 1, n_line);
 	}
 	else if (l[j] && (l[j] == DIRECT_CHAR || l[j] == ' ' || l[j] == '\t'))

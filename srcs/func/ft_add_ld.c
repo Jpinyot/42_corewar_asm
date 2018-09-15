@@ -25,7 +25,6 @@ t_line	*ft_add_ld(char *l, int cnt, int j, int n_line)
 		ft_error_order(n_line, 0, "ld", "ld\t%12, r11");
 	i+= j;
 	line = ft_newline(NULL, 2, l, 2);
-	ft_putchar(l[i]);
 	if (l[i] == DIRECT_CHAR)
 		i = ft_extract_dir(&line, i + 1, n_line, 0);
 	else if (ft_isdigit(l[i]) || l[i] == '-' || l[i] == '+')

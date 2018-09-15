@@ -27,8 +27,8 @@ static t_line *high_half(char *l, int cnt, int i, int n_line)
 		else if (cnt == 421)
 			return (ft_add_lldi(l, cnt, i, n_line));
 	}
-//	else if (cnt >= 432)
-//	{
+	else if (cnt >= 432)
+	{
 		if (cnt == 432)
 			return (ft_add_live(l, cnt, i, n_line));
 		else if (cnt == 434)
@@ -37,7 +37,7 @@ static t_line *high_half(char *l, int cnt, int i, int n_line)
 			return (ft_add_zjmp(l, cnt, i, n_line));
 		else if (cnt == 542)
 			return (ft_add_lfork(l, cnt, i, n_line));
-//	}
+	}
 //	ft_error_getorders(n_line, 2);
 	return (NULL);
 }
