@@ -6,11 +6,13 @@
 #    By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/14 22:43:59 by jpinyot           #+#    #+#              #
-#    Updated: 2018/09/17 13:43:55 by jpinyot          ###   ########.fr        #
+#    Updated: 2018/09/17 14:56:50 by jpinyot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = asm
+
+FLAGS = -Wall -Wextra -Werror
 
 SRC_DIR = srcs/
 
@@ -74,17 +76,17 @@ all: $(NAME)
 
 
 $(NAME): $(OBJ_SRC) $(OBJ_FUNC) $(OBJ_ERROR)
-	@$(MAKE) -C ../libft
-	@gcc $(FLAGS) -L../libft/ -lft -I../includes $(OBJ) -o $(NAME)
+	@$(MAKE) -C ./libft
+	@gcc $(FLAGS) -L./libft/ -lft -I./includes $(OBJ) -o $(NAME)
 %.o : %.c
-	@gcc $(FLAGS) -I../includes -c $<
+	@gcc $(FLAGS) -I./includes -c $<
 
 clean:
-	@$(MAKE) -C ../libft clean
+	@$(MAKE) -C ./libft clean
 	@/bin/rm -f $(OBJ)
 
 fclean: clean
-	@$(MAKE) -C ../libft fclean
+	@$(MAKE) -C ./libft fclean
 	@/bin/rm -f $(NAME)
 
 re: fclean
