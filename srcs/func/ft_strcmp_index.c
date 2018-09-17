@@ -1,4 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strcmp_index.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/17 13:40:35 by jpinyot           #+#    #+#             */
+/*   Updated: 2018/09/17 13:43:04 by jpinyot          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libasm.h"
+
+int	ft_strcmp_to(char *s1, char *line)
+{
+	int		i;
+	char	*s2;
+
+	i = -1;
+	if (line[0] == ':')
+		s2 = &line[1];
+	else
+		s2 = line;
+	while (s1[++i] && s2[i])
+		if (s1[i] != s2[i])
+			break ;
+	if ((s1[i] == LABEL_CHAR || s1[i] == ' ' || s1[i] == '\t') &&
+			(s2[i] == SEPARATOR_CHAR || s2[i] == ' ' || s2[i] == '\t'
+			|| s2[i] == 0))
+		return (1);
+	return (0);
+}
 
 int	ft_strcmp_index(char *s1, char *s2)
 {

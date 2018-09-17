@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_getname.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/17 13:09:32 by jpinyot           #+#    #+#             */
+/*   Updated: 2018/09/17 13:10:23 by jpinyot          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libasm.h"
 
-static char	*ft_strtabspace(char *s, int j)
+static char		*ft_strtabspace(char *s, int j)
 {
 	int i;
 
@@ -46,11 +58,11 @@ static t_header	ft_header_comment(char *l, int n_l, int i, t_header h)
 	return (h);
 }
 
-t_header	ft_getname(char *line, int n_line, t_header h)
+t_header		ft_getname(char *line, int n_line, t_header h)
 {
 	char	*tmp;
-	int	i;
-	int 	j;
+	int		i;
+	int		j;
 
 	j = 0;
 	while (line[j] && (line[j] == ' ' || line[j] == '\t'))
@@ -61,5 +73,7 @@ t_header	ft_getname(char *line, int n_line, t_header h)
 		h = ft_header_comment(line, n_line, i + j, h);
 	else if (line[j] != COMMENT_CHAR)
 		ft_error_getname(n_line, 0);
+	else
+		ft_strdel(&line);
 	return (h);
 }
