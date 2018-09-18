@@ -6,7 +6,7 @@
 /*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 18:52:53 by jpinyot           #+#    #+#             */
-/*   Updated: 2018/04/21 17:52:36 by jpinyot          ###   ########.fr       */
+/*   Updated: 2018/06/30 22:33:09 by jpinyot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int				get_next_line(const int fd, char **line)
 	char			*tmp2;
 	int				i;
 
-	if ((fd < 0 || line == NULL || read(fd, tmp, 0) < 0))
+	if ((fd < 0 || line == NULL || (i = read(fd, tmp, 0)) < 0))
 		return (-1);
 	mem = ft_checkfile(fd, &file);
 	while ((i = read(fd, tmp, BUFF_SIZE)))

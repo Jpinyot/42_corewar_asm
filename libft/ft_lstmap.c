@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jagarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/16 19:41:35 by jpinyot           #+#    #+#             */
-/*   Updated: 2017/11/16 22:07:58 by jpinyot          ###   ########.fr       */
+/*   Created: 2017/11/16 05:16:58 by jagarcia          #+#    #+#             */
+/*   Updated: 2017/11/16 07:52:01 by jagarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,27 @@
 
 t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	t_list *bgn;
-	t_list *tmp;
-	t_list *nw;
+	t_list	*newlist;
+	t_list	*tmp;
+	t_list	*cpynewlist;
 
-	if (lst == NULL)
-		return (NULL);
-	tmp = f(lst);
-	nw = ft_lstnew(tmp->content, tmp->content_size);
-	bgn = nw;
-	lst = lst->next;
-	while (lst != NULL)
+	if (lst)
 	{
-		tmp = f(lst);
-		nw->next = ft_lstnew(tmp->content, tmp->content_size);
-		nw = nw->next;
-		lst = lst->next;
+		tmp = (*f)(lst);
+		if (!(newlist = ft_lstnew(tmp->content, tmp->content_size)))
+			return (NULL);
+		cpynewlist = newlist;
+		while (lst->next)
+		{
+			lst = lst->next;
+			tmp = (*f)(lst);
+			if (!(cpynewlist->next = ft_lstnew(tmp->content,
+							tmp->content_size)))
+				return (NULL);
+			cpynewlist = cpynewlist->next;
+		}
 	}
-	return (bgn);
+	else
+		return (NULL);
+	return (newlist);
 }

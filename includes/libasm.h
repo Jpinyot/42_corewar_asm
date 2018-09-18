@@ -6,13 +6,13 @@
 /*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 14:14:30 by jpinyot           #+#    #+#             */
-/*   Updated: 2018/09/17 15:03:04 by jpinyot          ###   ########.fr       */
+/*   Updated: 2018/09/18 19:43:03 by jpinyot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBASM_H
 # define LIBASM_H
-# include "../libft/libft.h"
+# include "../libft/includes/libft.h"
 # include "op.h"
 # include <fcntl.h>
 # define HASH_SIZE 100
@@ -35,6 +35,7 @@ typedef struct	s_label
 	char			*name;
 	int				id;
 	int				pos;
+	int				color;
 	struct s_label	*copy;
 }				t_label;
 
@@ -44,6 +45,7 @@ typedef	struct	s_line
 	MAX_CAST		arg[3];
 	char			*arg_lab[3];
 	char			arg_size[3];
+	int				lab_color[3];
 	unsigned char	ocp;
 	char			*line;
 	unsigned int	pos;
@@ -54,7 +56,7 @@ typedef	struct	s_line
 /*
 **SRCS
 */
-int				assembler(int fd, char *filename);
+int				assembler(int fd, char *filename, int sel);
 /*
 **FUNC
 */
@@ -86,6 +88,14 @@ int				ft_extract_dir_2(t_line **line, int i, int n_line, int pos);
 int				ft_extract_ind(t_line **line, int i, int n_line, int pos);
 int				ft_extract_ind_label(t_line **line, int i, int n_line, int pos);
 int				ft_extract_reg(t_line **line, int i, int n_line, int pos);
+/*
+**PRINT
+*/
+void			ft_print_asm(t_header header, t_line *line, t_label **label, int size);
+t_line			*ft_label_to_pos(t_line *bgn, t_label **label);
+int				ft_print_label(t_line *line);
+void			ft_print_order(t_line *l);
+void			ft_print_info(t_line *l);
 /*
 **FUNC ORDERS
 */

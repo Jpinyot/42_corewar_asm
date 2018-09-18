@@ -3,53 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jagarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/14 18:02:20 by jpinyot           #+#    #+#             */
-/*   Updated: 2017/11/17 01:01:32 by jpinyot          ###   ########.fr       */
+/*   Created: 2017/11/15 23:38:40 by jagarcia          #+#    #+#             */
+/*   Updated: 2017/11/16 09:57:10 by jagarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_len(int n)
+static int	final_step(int *n, int *len, char **res)
 {
-	size_t len;
+	int		i;
 
-	if (n < 0)
-		len = 3;
+	if (*n < 0)
+	{
+		if (!((*res) = ft_strnew(*len + 1)))
+			return (0);
+		res[0][0] = '-';
+		*n = -(*n);
+		i = 1;
+		*len += 1;
+	}
 	else
-		len = 2;
-	n = n * -1;
-	while (n /= 10)
-		len++;
-	return (len);
+	{
+		i = 0;
+		(*res) = ft_strnew(*len);
+	}
+	return (i);
+}
+
+static char	*exceptions(int n)
+{
+	char *res;
+
+	if (n == -2147483648)
+	{
+		if (!(res = ft_strnew(11)))
+			return (NULL);
+		res = ft_strcat(ft_strcpy(res, ft_itoa(-214748364)), ft_itoa(8));
+	}
+	if (n == 0)
+	{
+		if (!(res = ft_strnew(1)))
+			return (NULL);
+		res[0] = 0 + 48;
+	}
+	return (res);
 }
 
 char		*ft_itoa(int n)
 {
-	size_t	len;
-	char	*s;
-	size_t	neg;
+	int		digit;
+	char	*res;
+	int		i;
 
-	len = ft_len(n);
-	neg = 0;
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	if (n < 0)
+	digit = 0;
+	if (n == -2147483648 || n == 0)
 	{
-		n = n * -1;
-		neg = 1;
+		res = exceptions(n);
+		return (res);
 	}
-	if (!(s = (char *)malloc(sizeof(char) * len)))
+	i = n;
+	while (i)
+	{
+		digit++;
+		i /= 10;
+	}
+	i = final_step(&n, &digit, &res);
+	if (!res)
 		return (NULL);
-	s[--len] = '\0';
-	while (len--)
+	while ((digit - 1) >= i)
 	{
-		s[len] = n % 10 + 48;
-		n = n / 10;
+		res[(digit--) - 1] = n % 10 + 48;
+		n /= 10;
 	}
-	if (neg == 1)
-		s[0] = '-';
-	return (s);
+	return (res);
 }

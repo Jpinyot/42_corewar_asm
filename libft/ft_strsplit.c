@@ -3,91 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jagarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/15 19:15:12 by jpinyot           #+#    #+#             */
-/*   Updated: 2017/11/17 04:55:50 by jpinyot          ###   ########.fr       */
+/*   Created: 2017/11/14 20:32:35 by jagarcia          #+#    #+#             */
+/*   Updated: 2017/11/21 01:58:48 by jagarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-static int	len_c(const char *s, char c)
+static void		func_while(const char *s, int j, char c, char ***new2)
 {
-	size_t i;
-	size_t cnt;
+	int		i[2];
+	int		cont;
 
-	i = 0;
-	cnt = 0;
-	while (s[i])
+	i[1] = 0;
+	while (j--)
 	{
-		if (s[i] != c)
+		i[0] = 0;
+		cont = 0;
+		while (*s == c && ((*(s + 1) == c) || (*(s + 1) != '\0')))
+			s++;
+		while (s[i[0]] != c && s[i[0]++] != '\0')
+			cont++;
+		if (!(new2[0][i[1]++] = ft_strsub(s, 0, cont)))
 		{
-			cnt++;
-			while (s[i] != c && s[i])
-				i++;
+			free(*new2);
+			*new2 = NULL;
+			return ;
 		}
-		else
-			i++;
+		while (cont-- > 0)
+			s++;
 	}
-	return (cnt);
+	new2[0][i[1]] = (void *)NULL;
 }
 
-static int	ft_le(const char *s, char c)
+char			**ft_strsplit(char const *s, char c)
 {
-	int i;
-	int cnt;
-
-	i = 0;
-	cnt = 0;
-	while (s[i] == c)
-		i++;
-	while (s[i] != c && s[i])
-	{
-		cnt++;
-		i++;
-	}
-	return (cnt);
-}
-
-static char	**cpy_ft(char **str, const char *s, char c)
-{
+	char	**new;
+	int		cuant;
 	int		i;
-	size_t	k;
-
-	i = 0;
-	k = 0;
-	while (s[i])
-	{
-		while (s[i] == c && s[i])
-			i++;
-		if (s[i] != c && s[i])
-		{
-			str[k] = ft_strsub(s, i, ft_le(&s[i], c));
-			i += ft_le(&s[i], c);
-		}
-		while (s[i] == c && s[i])
-			i++;
-		k++;
-	}
-	str[k] = NULL;
-	return (str);
-}
-
-char		**ft_strsplit(char const *s, char c)
-{
-	char	**str;
 
 	if (s == NULL)
 		return (NULL);
-	if (!(str = (char **)malloc(sizeof(char *) * (len_c(s, c) + 1))))
-		return (NULL);
-	if (len_c(s, c) == 0)
+	cuant = 0;
+	i = 0;
+	while (s[i])
 	{
-		*str = 0;
-		return (str);
+		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+			cuant++;
+		i++;
 	}
-	str = cpy_ft(str, s, c);
-	return (str);
+	if (cuant == 0)
+	{
+		if (!(new = (char **)malloc(sizeof(char *))))
+			return (NULL);
+		new[0] = NULL;
+		return (new);
+	}
+	if (!(new = (char **)malloc(sizeof(char *) * (cuant + 1))))
+		return (NULL);
+	func_while(s, cuant, c, &new);
+	return (new);
 }

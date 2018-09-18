@@ -3,25 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jagarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/11 22:04:11 by jpinyot           #+#    #+#             */
-/*   Updated: 2017/11/16 00:17:05 by jpinyot          ###   ########.fr       */
+/*   Created: 2017/11/11 19:40:35 by jagarcia          #+#    #+#             */
+/*   Updated: 2017/11/11 21:06:09 by jagarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *str, int c)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t i;
+	char *scpy;
+	char ccpy;
 
-	i = 0;
-	while (i < ft_strlen(str) + 1)
+	scpy = (char *)s;
+	ccpy = (char)c;
+	while (*scpy)
 	{
-		if (str[i] == (char)c)
-			return ((char *)str + i);
-		i++;
+		if (*scpy == ccpy)
+			return (scpy);
+		scpy++;
 	}
+	if (*scpy == ccpy)
+		return (scpy);
 	return (NULL);
 }

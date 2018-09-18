@@ -3,38 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jagarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/11 23:17:23 by jpinyot           #+#    #+#             */
-/*   Updated: 2017/11/16 00:13:08 by jpinyot          ###   ########.fr       */
+/*   Created: 2017/11/11 21:44:13 by jagarcia          #+#    #+#             */
+/*   Updated: 2017/11/11 22:44:02 by jagarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strstr(const char *haystack, const char *needle)
+char	*ft_strstr(const char *s1, const char *s2)
 {
-	char	*h;
-	size_t	i;
-	size_t	a;
-	size_t	t;
+	char	*s1cpy;
+	char	*s2cpy;
+	char	*bubble;
 
-	a = 0;
-	h = (char *)haystack;
-	if (*haystack == 0 && *needle == 0)
-		return (h);
-	while (h[a])
+	s1cpy = (char *)s1;
+	s2cpy = (char *)s2;
+	if (ft_strlen(s2cpy) == 0)
+		return (s1cpy);
+	while (*s1cpy)
 	{
-		i = 0;
-		t = a;
-		while (h[t] == needle[i] && needle[i] != 0)
+		if (*s1cpy == *s2cpy)
 		{
-			i++;
-			t++;
+			bubble = s1cpy;
+			while (*bubble++ == *s2cpy++)
+			{
+				if (!*s2cpy)
+					return (s1cpy);
+			}
 		}
-		if (needle[i] == 0)
-			return (&h[t - ft_strlen(needle)]);
-		a++;
+		if (s2 != s2cpy)
+			s2cpy = (char *)s2;
+		s1cpy++;
 	}
 	return (NULL);
 }

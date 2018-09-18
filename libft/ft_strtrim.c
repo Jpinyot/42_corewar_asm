@@ -3,37 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jagarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/13 22:04:37 by jpinyot           #+#    #+#             */
-/*   Updated: 2017/11/17 19:50:57 by jpinyot          ###   ########.fr       */
+/*   Created: 2017/11/14 18:55:37 by jagarcia          #+#    #+#             */
+/*   Updated: 2017/11/16 09:56:29 by jagarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s)
+static char	*cpyandret(int i, const char *s)
 {
-	int		i;
-	int		len;
-	char	*str;
+	char *new;
 
-	if (s == NULL)
+	if (!(new = (char *)malloc(i + 2)))
 		return (NULL);
-	len = ft_strlen(s);
-	while (s[len - 1] == ' ' || s[len - 1] == '\n' || s[len - 1] == '\t')
-		len--;
-	if (len <= 0)
-		return (ft_strnew(1));
-	i = -1;
-	while (s[++i] == ' ' || s[i] == '\n' || s[i] == '\t')
-		len--;
-	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	s = s + i;
-	i = 0;
-	while (i < len)
-		str[i++] = *s++;
-	str[i] = 0;
-	return (str);
+	ft_memcpy(new, s, i + 1);
+	new[i + 1] = '\0';
+	return (new);
+}
+
+char		*ft_strtrim(char const *s)
+{
+	char	*new;
+	int		i;
+
+	if (s)
+	{
+		i = ft_strlen(s) - 1;
+		while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
+		{
+			i--;
+			if (i == 0)
+			{
+				if (!(new = (char *)malloc(1)))
+					return (NULL);
+				new[0] = 0;
+				return (new);
+			}
+		}
+		while (*s == ' ' || *s == '\n' || *s == '\t')
+		{
+			s++;
+			i--;
+		}
+		return (cpyandret(i, s));
+	}
+	return (NULL);
 }

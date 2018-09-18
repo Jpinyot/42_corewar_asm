@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jagarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/13 18:17:37 by jpinyot           #+#    #+#             */
-/*   Updated: 2017/11/17 02:44:02 by jpinyot          ###   ########.fr       */
+/*   Created: 2017/11/14 17:19:21 by jagarcia          #+#    #+#             */
+/*   Updated: 2017/11/16 09:54:16 by jagarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	ft_striter(char *s, void (*f)(char *))
 {
-	if (s == NULL || f == NULL)
-		return ;
-	while (s != NULL && *s)
+	if (s && f)
 	{
-		f(s);
-		s++;
+		while (*s)
+			f(s++);
 	}
 }

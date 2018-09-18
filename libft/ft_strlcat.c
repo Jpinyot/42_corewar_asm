@@ -1,36 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jagarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/10 03:09:44 by jpinyot           #+#    #+#             */
-/*   Updated: 2017/11/17 03:35:42 by jpinyot          ###   ########.fr       */
+/*   Created: 2017/11/11 01:40:25 by jagarcia          #+#    #+#             */
+/*   Updated: 2017/11/13 17:40:09 by jagarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *str, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t len)
 {
-	size_t d_len;
-	size_t s_len;
+	char	*dstcpy;
+	char	*srccpy;
+	size_t	length;
+	size_t	bubble;
 
-	d_len = ft_strlen(dst);
-	s_len = ft_strlen(str);
-	if (size <= d_len)
-		return (size + s_len);
-	if (s_len < size - d_len)
+	bubble = len;
+	length = ft_strlen(dst) + ft_strlen(src);
+	dstcpy = dst;
+	srccpy = (char *)src;
+	while (*dstcpy)
 	{
-		ft_memcpy(dst + d_len, str, s_len);
-		dst = dst + d_len + s_len;
+		if (len == 0)
+			return (bubble + ft_strlen(src));
+		len--;
+		dstcpy++;
 	}
-	else
+	while (len > 1 && *srccpy)
 	{
-		ft_memcpy(dst + d_len, str, size - d_len - 1);
-		dst = dst + size - 1;
+		*dstcpy++ = *srccpy++;
+		len--;
 	}
-	*dst = 0;
-	return (d_len + s_len);
+	*dstcpy = '\0';
+	return (length);
 }

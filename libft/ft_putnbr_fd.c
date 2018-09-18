@@ -3,36 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jagarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/16 00:17:23 by jpinyot           #+#    #+#             */
-/*   Updated: 2017/11/17 02:10:43 by jpinyot          ###   ########.fr       */
+/*   Created: 2017/11/16 00:37:20 by jagarcia          #+#    #+#             */
+/*   Updated: 2017/11/16 06:53:11 by jagarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int i, int fd)
 {
-	int i;
-	int nb[10];
-
-	i = 0;
-	if (n < 0)
+	if (i == -2147483648)
+	{
+		ft_putnbr_fd(-214748364, fd);
+		ft_putnbr_fd(8, fd);
+		return ;
+	}
+	if (i < 0)
 	{
 		ft_putchar_fd('-', fd);
-		n = n * -1;
+		i = i * (-1);
 	}
-	if (n == -2147483648)
-		ft_putstr_fd("2147483648", fd);
-	if (n == 0)
-		ft_putchar_fd('0', fd);
-	while (n > 0)
+	if (i < 10)
+		ft_putchar_fd(i + 48, fd);
+	else
 	{
-		nb[i] = n % 10;
-		n = n / 10;
-		i++;
+		ft_putnbr_fd(i / 10, fd);
+		ft_putnbr_fd(i % 10, fd);
 	}
-	while (i--)
-		ft_putchar_fd(nb[i] + 48, fd);
 }

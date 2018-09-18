@@ -3,28 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpinyot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jagarcia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/11 18:57:10 by jpinyot           #+#    #+#             */
-/*   Updated: 2017/11/16 00:20:52 by jpinyot          ###   ########.fr       */
+/*   Created: 2017/11/10 23:41:27 by jagarcia          #+#    #+#             */
+/*   Updated: 2017/11/13 01:23:52 by jagarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_memcmp(const void *s1, const void *s2, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	unsigned char *d1;
-	unsigned char *d2;
+	unsigned char	*s1cpy;
+	unsigned char	*s2cpy;
+	int				bubble;
 
-	d1 = (unsigned char *)s1;
-	d2 = (unsigned char *)s2;
-	while (n--)
+	s1cpy = (unsigned char *)s1;
+	s2cpy = (unsigned char *)s2;
+	while (n > 0)
 	{
-		if (*d1 != *d2)
-			return (*d1 - *d2);
-		d1++;
-		d2++;
+		bubble = (*s1cpy) - (*s2cpy);
+		if (bubble == 0)
+		{
+			s1cpy++;
+			s2cpy++;
+			n--;
+		}
+		else
+			return (bubble);
 	}
 	return (0);
 }
